@@ -51,6 +51,9 @@
                     </tr>
                 </thead> -->
                 <tbody>
+                    {% if todos.count == 0%}
+                    <h1>No todos!</h1>
+                    {%else%}
                     {% for todo in todos %}
                         <tr>
                             <th scope="row">
@@ -91,7 +94,7 @@
                                 </td>
                             </th>
                         </tr>
-                    {% endfor %}
+                    {% endfor %}{%endif%}
                 </tbody>
             </table>
             
