@@ -1,4 +1,4 @@
-{{ todo }} <!DOCTYPE html> 
+<!DOCTYPE html> 
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -12,6 +12,47 @@
             crossorigin="anonymous"
         />
     </head>
+    {% for todo in todos %}
+                        <tr>
+                            <th scope="row">
+                                <td>
+                                    <form  method="POST" action="{% url 'app:toggle_editing' id=todo.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-primary">edit</button>
+                                        
+                                    </form>
+                                </td>
+                                <td>
+                                    {% if todo.editing%}
+                                    <form method="POST" action="{% url 'app:new-title' id=todo.id%}">
+                                        {%csrf_token%}
+                                        <input name="title" >
+                                        <button class="btn btn-primary"><i class="fas fa-arrow-down"></i></button>
+                                    </form>
+                                    {%else%}
+                                    {{ todo.title }}
+                                    {%endif%}
+                                </td>
+                                <td>
+                                    <form  method="POST" action="{% url 'app:toggle_completed' id=todo.id %}">
+                                            {% csrf_token %}
+                                            {% if todo.completed%}
+                                            <i class="fas fa-check"></i>
+                                            {%else%}
+                                            <i class="fas fa-times"></i>
+                                            {%endif%}
+                                        <button class="btn btn-success">toggle complete</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="POST" action="{% url 'app:delete' id=todo.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger">delete</button>
+                                    </form>
+                                </td>
+                            </th>
+                        </tr>
+                    {% endfor %}
     <body>
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
